@@ -81,6 +81,12 @@ void ETMCanInitialize(void);
   This is called once when the processor starts up to initialize the can bus and all of the can variables
 */
 
+
+void ETMCanSetBit(unsigned int* int_ptr, unsigned int bit_mask);
+void ETMCanClearBit(unsigned int* int_ptr, unsigned int bit_mask);
+unsigned int ETMCanCheckBit(unsigned int data, unsigned int bit_mask);
+
+
 #ifndef __ETM_CAN_MASTER_MODULE
 void ETMCanLogCustomPacketC(void);
 void ETMCanLogCustomPacketD(void);
@@ -89,7 +95,7 @@ void ETMCanLogCustomPacketF(void);
 #endif
 
 
-#ifdef __A36487
+#ifdef __A35487
 // Only for Pulse Sync Board
 void ETMCanPulseSyncSendNextPulseLevel(unsigned int next_pulse_level, unsigned int next_pulse_count);
 #endif
@@ -99,6 +105,52 @@ void ETMCanPulseSyncSendNextPulseLevel(unsigned int next_pulse_level, unsigned i
 // Only for Ion Pump Board
 void ETMCanIonPumpSendTargetCurrentReading(unsigned int target_current_reading, unsigned int energy_level, unsigned int pulse_count);
 #endif
+
+
+
+
+// ------------------- STATUS/INHBIT REGISTER --------------------------//
+
+#define STATUS_BIT_SUM_FAULT                       0b0000000000000001
+#define STATUS_BIT_PULSE_INHIBITED                 0b0000000000000010
+#define STATUS_BIT_BOARD_WAITING_INITIAL_CONFIG    0b0000000000000100
+#define STATUS_BIT_BOARD_SELF_CHECK_FAILED         0b0000000000001000
+#define STATUS_BIT_HIGH_SPEED_LOGGING_ENABLED      0b0000000000010000
+#define STATUS_BIT_STATUS_UNUSED_1                 0b0000000000100000
+#define STATUS_BIT_STATUS_UNUSED_2                 0b0000000001000000
+#define STATUS_BIT_STATUS_UNUSED_3                 0b0000000010000000
+
+#define STATUS_BIT_USER_DEFINED_8                  0b0000000100000000
+#define STATUS_BIT_USER_DEFINED_9                  0b0000001000000000
+#define STATUS_BIT_USER_DEFINED_10                 0b0000010000000000
+#define STATUS_BIT_USER_DEFINED_11                 0b0000100000000000
+#define STATUS_BIT_USER_DEFINED_12                 0b0001000000000000
+#define STATUS_BIT_USER_DEFINED_13                 0b0010000000000000
+#define STATUS_BIT_USER_DEFINED_14                 0b0100000000000000
+#define STATUS_BIT_USER_DEFINED_15                 0b1000000000000000
+
+
+
+// ----------------- FAULT/WARNING Register --------------------------//
+
+#define FAULT_BIT_CAN_BUS_TIMEOUT                  0b0000000000000001
+#define FAULT_BIT_USER_DEFINED_1                   0b0000000000000010
+#define FAULT_BIT_USER_DEFINED_2                   0b0000000000000100
+#define FAULT_BIT_USER_DEFINED_3                   0b0000000000001000
+#define FAULT_BIT_USER_DEFINED_4                   0b0000000000010000
+#define FAULT_BIT_USER_DEFINED_5                   0b0000000000100000
+#define FAULT_BIT_USER_DEFINED_6                   0b0000000001000000
+#define FAULT_BIT_USER_DEFINED_7                   0b0000000010000000
+
+#define FAULT_BIT_USER_DEFINED_8                   0b0000000100000000
+#define FAULT_BIT_USER_DEFINED_9                   0b0000001000000000
+#define FAULT_BIT_USER_DEFINED_10                  0b0000010000000000
+#define FAULT_BIT_USER_DEFINED_11                  0b0000100000000000
+#define FAULT_BIT_USER_DEFINED_12                  0b0001000000000000
+#define FAULT_BIT_USER_DEFINED_13                  0b0010000000000000
+#define FAULT_BIT_USER_DEFINED_14                  0b0100000000000000
+#define FAULT_BIT_USER_DEFINED_15                  0b1000000000000000
+
 
 
 #endif

@@ -81,7 +81,7 @@ void ETMCanCheckForTimeOut(void) {
   if (_T3IF) {
     _T3IF = 0;
     etm_can_can_status.can_status_timeout++;
-    etm_can_status_register.status_word_1 |= ETM_CAN_STATUS_WORD_1_FAULT_CAN_BUS;
+    etm_can_status_register.status_word_1 |= FAULT_BIT_CAN_BUS_TIMEOUT;
   }
 }
 
@@ -124,6 +124,18 @@ void ETMCanProcessMessage(void) {
   etm_can_can_status.can_status_data_log_rx_buffer_overflow = etm_can_rx_data_log_buffer.message_overwrite_count;
 #endif  
 
+}
+
+void ETMCanSetBit(unsigned int* int_ptr, unsigned int bit_mask) {
+  *int_ptr = *int_ptr | bit_mask;
+}
+
+void ETMCanClearBit(unsigned int* int_ptr, unsigned int bit_mask) {
+  *int_ptr = *int_ptr & (~bit_mask);
+}
+
+unsigned int ETMCanCheckBit(unsigned int data, unsigned int bit_mask) {
+  return (data & bit_mask);
 }
 
 
@@ -368,16 +380,16 @@ void ETMCanUpdateFaultAndInhibitBits(void) {
   // Update the Fault bit
   // The individual Fault bits are latched but not the Sum Fault bit
   if (etm_can_status_register.status_word_1 & etm_can_status_register.status_word_1_fault_mask) {
-    etm_can_status_register.status_word_0 |= ETM_CAN_STATUS_WORD_0_SUM_FAULT;  // Set the Fault Bit
+    etm_can_status_register.status_word_0 |= STATUS_BIT_SUM_FAULT;  // Set the Fault Bit
   } else {
-    etm_can_status_register.status_word_0 &= ~ETM_CAN_STATUS_WORD_0_SUM_FAULT;  // Clear the Fault Bit
+    etm_can_status_register.status_word_0 &= ~STATUS_BIT_SUM_FAULT;  // Clear the Fault Bit
   }
   
   // Update the Inhibit bit
   if (etm_can_status_register.status_word_0 & etm_can_status_register.status_word_0_inhbit_mask) {
-    etm_can_status_register.status_word_0 |= ETM_CAN_STATUS_WORD_0_PULSE_INHIBITED;  // Set the Inhibit Bit
+    etm_can_status_register.status_word_0 |= STATUS_BIT_PULSE_INHIBITED;  // Set the Inhibit Bit
   } else {
-    etm_can_status_register.status_word_0 &= ~ETM_CAN_STATUS_WORD_0_PULSE_INHIBITED;  // Clear the Inhibit Bit
+    etm_can_status_register.status_word_0 &= ~STATUS_BIT_PULSE_INHIBITED;  // Clear the Inhibit Bit
   }
 }
 
@@ -421,11 +433,11 @@ void ETMCanExecuteCMDDefault(ETMCanMessage* message_ptr) {
     break;
  
   case ETM_CAN_REGISTER_DEFAULT_CMD_DISABLE_HIGH_SPEED_DATA_LOGGING:
-    etm_can_status_register.status_word_0 &= ~ETM_CAN_STATUS_WORD_0_HIGH_SPEED_LOGGING_ENABLED;  // Clear the bit
+    etm_can_status_register.status_word_0 &= ~STATUS_BIT_HIGH_SPEED_LOGGING_ENABLED;  // Clear the bit
     break;
 
   case ETM_CAN_REGISTER_DEFAULT_CMD_ENABLE_HIGH_SPEED_DATA_LOGGING:
-    etm_can_status_register.status_word_0 |= ETM_CAN_STATUS_WORD_0_HIGH_SPEED_LOGGING_ENABLED;  // Set the bit
+    etm_can_status_register.status_word_0 |= STATUS_BIT_HIGH_SPEED_LOGGING_ENABLED;  // Set the bit
     break;
    
   default:
