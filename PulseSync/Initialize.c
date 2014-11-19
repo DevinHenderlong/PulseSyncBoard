@@ -8,8 +8,7 @@ void Initialize(void);
 void InitPins(void);
 void InitADC(void);
 void LEDCheck(void);
-void InitTimer4(void);
-void InitTimer5(void);
+void InitTimer2(void);
 void InitUART(void);
 void InitINT3(void);
 void InitINT4(void);
@@ -24,8 +23,7 @@ void Initialize(void)
     MACRO_ClrWdt()
     InitUART();
     InitINT3(); //Trigger Interrupt
-    InitTimer4();
-    InitTimer5();
+    InitTimer2();
 }
 
 void InitPins()
@@ -361,26 +359,14 @@ void LEDCheck(void)
   _INT4IP = 7;		// Set interrupt to highest priority
  }
 
-void InitTimer4(void)
+void InitTimer2(void)
 {
-    T4CONbits.TCKPS = 0b10;     //64 prescale
-    T4CONbits.TCS = 0;          //Disable Tsync from external clock output
-    PR4 = (FCY / 64 / 10);      //This produces a 100ms interrupt timer (15625)
-    TMR4 = 0;
-    _T4IF = 0;
-    _T4IE = 1;
-    _T4IP = 5;
-    T4CONbits.TON = 1;
-}
-
-void InitTimer5(void)
-{
-    T5CONbits.TCKPS = 0b01;     //8 prescale
-    T5CONbits.TCS = 0;          //Disable Tsync from external clock output
-    PR5 = 3000;                 //This produces a 2.4ms interrupt timer
-    TMR5 = 0;
-    _T5IF = 0;
-    _T5IE = 1;
-    _T5IP = 6;
-    T5CONbits.TON = 1;
+    T2CONbits.TCKPS = 0b10;     //64 prescale
+    T2CONbits.TCS = 0;          //Disable Tsync from external clock output
+    PR2 = (FCY / 64 / 10);      //This produces a 100ms interrupt timer (15625)
+    TMR2 = 0;
+    _T2IF = 0;
+    _T2IE = 1;
+    _T2IP = 5;
+    T2CONbits.TON = 1;
 }

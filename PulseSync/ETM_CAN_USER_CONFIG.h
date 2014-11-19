@@ -4,6 +4,16 @@
 
 #define __A36224_500
 
+<<<<<<< HEAD
+=======
+//#define __ETM_CAN_MASTER_MODULE
+
+#define __USE_CAN_2
+//#define __A36224_500
+#define __A36487                            //Pulse Sync Board
+#define ETM_CAN_MY_ADDRESS                  ETM_CAN_ADDR_HEATER_MAGNET_BOARD
+#define PIN_CAN_OPERATION_LED               _LATC4
+>>>>>>> parent of 0f1a9d7... Started CAN
 
 
 #ifdef __A36224_500

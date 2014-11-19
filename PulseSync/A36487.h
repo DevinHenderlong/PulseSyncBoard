@@ -17,8 +17,6 @@
 #include "Version.h"
 #include "ETM_BUFFER_BYTE_64.h"
 #include "ETM_CAN_USER_CONFIG.h"
-#include "ETM_CAN_PUBLIC.h"
-#include "ETM_CAN.h"
 #define __A36487
 
 //Macros
@@ -63,18 +61,11 @@ typedef struct{
     unsigned int pulses_on;
     unsigned int pulses_off;
     unsigned int pulse_counter;
-    unsigned int prf_counter_100ms;
-    unsigned int can_counter_100ms;
-    unsigned int heartbeat;
-    unsigned int can_comm_ok;
-    unsigned int counter_config_received;
+    unsigned int counter_100ms;
     unsigned char prf;
-    unsigned char prf_ok_to_pulse;  //Limits the prf to 2.4ms period
     unsigned char personality;      //1=UL, 2=L, 3=M, 4=H
     unsigned char last_trigger_filtered;
     unsigned char energy;
-    unsigned char enable_pulses;
-    unsigned char state_machine;
     unsigned char local_state;      //same definitions as system state
     unsigned char system_state;     //bit 0 = warming up
                                     //bit 1 = warm (standby)
@@ -89,9 +80,8 @@ typedef struct{
     unsigned char keylock_fault;
     unsigned char panel_fault;
     unsigned char prf_fault;
-    unsigned char can_comm_fault;
+    unsigned char inhibit_100ms;    //Inhibit pulsing for 100ms counts
     unsigned char inhibit_pulsing;  //Inhibit all output pulses
-    unsigned char reset_faults;     //From ECB
 
 } PSB_FAULTS;
 
@@ -120,10 +110,9 @@ extern PSB_DATA psb_data;
 #define LOW             0
 #define MAX_FREQUENCY   410 // Hz
 
-#define STATE_INIT              0
-#define STATE_WAIT_FOR_CONFIG   1
-#define STATE_RUN               2
-#define STATE_FAULT             5
+#define STATE_INIT      0
+#define STATE_RUN       1
+#define STATE_FAULT     5
 
 
 //State bits in the status register
