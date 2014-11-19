@@ -27,8 +27,8 @@ Command:
   build/default/production/main.o \
   build/default/production/A36487.o \
   build/default/production/ETM_CAN.o \
-  build/default/production/ETM_CAN_USER_CONFIG.o \
   build/default/production/ETM_CAN_UTILITY.o \
+  build/default/production/ETM_CAN_USER_CONFIG.o \
   --defsym=__MPLAB_BUILD=1 \
   -Tp30F6014A.gld.00 \
   --stack=16 \
@@ -114,21 +114,21 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x100               0x384           0x546  (1350)
 .const                       0x484                 0x8             0xc  (12)
-.text                        0x48c              0x15d0          0x20b8  (8376)
-.init.delay32               0x1a5c                0x1c            0x2a  (42)
-.dinit                      0x1a78                 0xe            0x15  (21)
-.text                       0x1a86                 0x6             0x9  (9)
+.text                        0x48c              0x1a6c          0x27a2  (10146)
+.init.delay32               0x1ef8                0x1c            0x2a  (42)
+.dinit                      0x1f14                 0xe            0x15  (21)
+.text                       0x1f22                 0x6             0x9  (9)
 
-                     Total program memory used (bytes):         0x2652  (9810) 6%
+                     Total program memory used (bytes):         0x2d3c  (11580) 7%
 
 
 Data Memory  [Origin = 0x800, Length = 0x2000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0           0x282  (642)
+.nbss                        0x800                   0           0x290  (656)
 
-                        Total data memory used (bytes):          0x282  (642) 7%
+                        Total data memory used (bytes):          0x290  (656) 8%
 
 
 Dynamic Memory Usage
@@ -136,9 +136,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0xa82                              0x1d7e  (7550)
+stack                        0xa90                              0x1d70  (7536)
 
-                        Maximum dynamic memory (bytes):         0x1d7e  (7550)
+                        Maximum dynamic memory (bytes):         0x1d70  (7536)
 
 
 External Symbols in Data Memory (by address):
@@ -157,14 +157,13 @@ External Symbols in Data Memory (by address):
                     0x09ca                  _uart2_input_buffer
                     0x0a0c                  _uart2_output_buffer
                     0x0a4e                  _psb_params
-                    0x0a64                  _psb_faults
-                    0x0a6c                  _psb_data
-                    0x0a80                  _change_pulse_width_counter
-                    0x0a81                  _state
+                    0x0a66                  _psb_faults
+                    0x0a6e                  _psb_data
+                    0x0a8e                  _change_pulse_width_counter
 
 External Symbols in Data Memory (by name):
 
-                    0x0a80                  _change_pulse_width_counter
+                    0x0a8e                  _change_pulse_width_counter
                     0x09c4                  _command_string
                     0x09a2                  _etm_can_can_status
                     0x09c2                  _etm_can_default_transmit_counter
@@ -176,10 +175,9 @@ External Symbols in Data Memory (by name):
                     0x0986                  _etm_can_status_register
                     0x0956                  _etm_can_system_debug_data
                     0x08a8                  _etm_can_tx_message_buffer
-                    0x0a6c                  _psb_data
-                    0x0a64                  _psb_faults
+                    0x0a6e                  _psb_data
+                    0x0a66                  _psb_faults
                     0x0a4e                  _psb_params
-                    0x0a81                  _state
                     0x09ca                  _uart2_input_buffer
                     0x0a0c                  _uart2_output_buffer
 
@@ -187,8 +185,8 @@ External Symbols in Program Memory (by address):
 
                   0x000100                  __resetPRI
                   0x00012c                  __psv_init
-                  0x00013c                  __data_init_standard
                   0x00013c                  __data_init
+                  0x00013c                  __data_init_standard
                   0x00019a                  __DefaultInterrupt
                   0x00019e                  ___subsf3
                   0x0001a0                  ___addsf3
@@ -205,135 +203,139 @@ External Symbols in Program Memory (by address):
                   0x000426                  ___floatundisf
                   0x000484                  _dos_intensities
                   0x00048c                  _DoPulseSync
-                  0x0004d8                  __INT3Interrupt
-                  0x000572                  _ReadTrigPulseWidth
-                  0x000606                  _FilterTrigger
-                  0x000672                  _ReadAndSetEnergy
-                  0x0006f6                  _ProgramShiftRegisters
-                  0x000bdc                  _GetInterpolationValue
-                  0x000c9c                  _SetStatusAndLEDs
-                  0x000d0e                  __T2Interrupt
-                  0x000d72                  _ETMCanDoCan
-                  0x000d80                  _ETMCanCheckForTimeOut
-                  0x000d9e                  _ETMCanProcessMessage
-                  0x000e14                  _ETMCanSetValue
-                  0x000e7e                  _ETMCanCheckForStatusChange
-                  0x000e9a                  _ETMCanUpdateFaultAndInhibitBits
-                  0x000ed4                  _ETMCanExecuteCMD
-                  0x000f1a                  _ETMCanExecuteCMDDefault
-                  0x000f6e                  _ETMCanReturnValue
-                  0x000fd8                  _ETMCanSetValueCalibration
-                  0x000fe0                  _ETMCanReturnValueCalibration
-                  0x000fe8                  _ETMCanSendStatus
-                  0x001010                  _ETMCanDoSlaveSync
-                  0x00101e                  _ETMCanLogData
-                  0x00108e                  _ETMCanDoSlaveLog
-                  0x0011dc                  _ETMCanPulseSyncSendNextPulseLevel
-                  0x0011fe                  _ETMCanIonPumpSendTargetCurrentReading
-                  0x001232                  _ETMCanInitialize
-                  0x001306                  __C2Interrupt
-                  0x0013c0                  _Initialize
-                  0x0013d8                  _InitPins
-                  0x00147c                  _LEDCheck
-                  0x001646                  _InitUART
-                  0x001684                  _InitINT3
-                  0x00169a                  _InitINT4
-                  0x0016b0                  _InitTimer2
-                  0x0016d8                  _ReadDosePersonality
-                  0x00180e                  _ETMCanBufferRowsAvailable
-                  0x00181a                  _ETMCanBufferNotEmpty
-                  0x001824                  _ETMCanRXMessageBuffer
-                  0x00185e                  _ETMCanRXMessage
-                  0x001886                  _ETMCanAddMessageToBuffer
-                  0x0018b6                  _ETMCanReadMessageFromBuffer
-                  0x0018e8                  _ETMCanTXMessageBuffer
-                  0x001914                  _ETMCanTXMessage
-                  0x001928                  _ETMCanBufferInitialize
-                  0x001932                  _BufferByte64Initialize
-                  0x001946                  _BufferByte64WriteByte
-                  0x001990                  _BufferByte64ReadByte
-                  0x0019cc                  _BufferByte64BytesInBuffer
-                  0x0019e2                  _BufferByte64IsNotEmpty
-                  0x0019fe                  _ETMCanSetValueBoardSpecific
-                  0x001a12                  _ETMCanExecuteCMDBoardSpecific
-                  0x001a26                  _ETMCanReturnValueBoardSpecific
-                  0x001a3e                  _ETMCanResetFaults
-                  0x001a44                  _ETMCanLogCustomPacketC
-                  0x001a4a                  _ETMCanLogCustomPacketD
-                  0x001a50                  _ETMCanLogCustomPacketE
-                  0x001a56                  _ETMCanLogCustomPacketF
-                  0x001a5c                  ___delay32
-                  0x001a86                  _main
+                  0x000500                  __INT3Interrupt
+                  0x0005dc                  _ReadTrigPulseWidth
+                  0x000670                  _FilterTrigger
+                  0x0006dc                  _ReadAndSetEnergy
+                  0x000760                  _ProgramShiftRegisters
+                  0x000c46                  _GetInterpolationValue
+                  0x000d06                  _SetStatusAndLEDs
+                  0x000e28                  __T4Interrupt
+                  0x000eb8                  __T5Interrupt
+                  0x000ecc                  _ETMCanDoCan
+                  0x000eda                  _ETMCanCheckForTimeOut
+                  0x000ef8                  _ETMCanProcessMessage
+                  0x000f6c                  _ETMCanSetValue
+                  0x000fd6                  _ETMCanCheckForStatusChange
+                  0x000ff2                  _ETMCanUpdateFaultAndInhibitBits
+                  0x00102c                  _ETMCanExecuteCMD
+                  0x001072                  _ETMCanExecuteCMDDefault
+                  0x0010c6                  _ETMCanReturnValue
+                  0x001130                  _ETMCanSetValueCalibration
+                  0x001138                  _ETMCanReturnValueCalibration
+                  0x001140                  _ETMCanSendStatus
+                  0x001168                  _ETMCanDoSlaveSync
+                  0x001176                  _ETMCanLogData
+                  0x0011e6                  _ETMCanDoSlaveLog
+                  0x001334                  _ETMCanPulseSyncSendNextPulseLevel
+                  0x001356                  _ETMCanIonPumpSendTargetCurrentReading
+                  0x00138a                  _ETMCanInitialize
+                  0x00145e                  __C2Interrupt
+                  0x00151a                  _ETMCanSetValueBoardSpecific
+                  0x0016d0                  _ETMCanExecuteCMDBoardSpecific
+                  0x001712                  _ETMCanReturnValueBoardSpecific
+                  0x00173e                  _ETMCanResetFaults
+                  0x00174a                  _ETMCanLogCustomPacketC
+                  0x001782                  _ETMCanLogCustomPacketD
+                  0x0017dc                  _ETMCanLogCustomPacketE
+                  0x001836                  _ETMCanLogCustomPacketF
+                  0x001890                  _Initialize
+                  0x0018aa                  _InitPins
+                  0x00194e                  _LEDCheck
+                  0x001b18                  _InitUART
+                  0x001b56                  _InitINT3
+                  0x001b6c                  _InitINT4
+                  0x001b82                  _InitTimer4
+                  0x001baa                  _InitTimer5
+                  0x001bd2                  _ReadDosePersonality
+                  0x001d08                  _ETMCanBufferRowsAvailable
+                  0x001d14                  _ETMCanBufferNotEmpty
+                  0x001d1e                  _ETMCanRXMessageBuffer
+                  0x001d58                  _ETMCanRXMessage
+                  0x001d80                  _ETMCanAddMessageToBuffer
+                  0x001db0                  _ETMCanReadMessageFromBuffer
+                  0x001de2                  _ETMCanTXMessageBuffer
+                  0x001e0e                  _ETMCanTXMessage
+                  0x001e22                  _ETMCanBufferInitialize
+                  0x001e2c                  _BufferByte64Initialize
+                  0x001e40                  _BufferByte64WriteByte
+                  0x001e8a                  _BufferByte64ReadByte
+                  0x001ec6                  _BufferByte64BytesInBuffer
+                  0x001edc                  _BufferByte64IsNotEmpty
+                  0x001ef8                  ___delay32
+                  0x001f22                  _main
                   0xf80006                  __FBS.sec
                   0xf80008                  __FSS.sec
                   0xf8000a                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x0019cc                  _BufferByte64BytesInBuffer
-                  0x001932                  _BufferByte64Initialize
-                  0x0019e2                  _BufferByte64IsNotEmpty
-                  0x001990                  _BufferByte64ReadByte
-                  0x001946                  _BufferByte64WriteByte
+                  0x001ec6                  _BufferByte64BytesInBuffer
+                  0x001e2c                  _BufferByte64Initialize
+                  0x001edc                  _BufferByte64IsNotEmpty
+                  0x001e8a                  _BufferByte64ReadByte
+                  0x001e40                  _BufferByte64WriteByte
                   0x00048c                  _DoPulseSync
-                  0x001886                  _ETMCanAddMessageToBuffer
-                  0x001928                  _ETMCanBufferInitialize
-                  0x00181a                  _ETMCanBufferNotEmpty
-                  0x00180e                  _ETMCanBufferRowsAvailable
-                  0x000e7e                  _ETMCanCheckForStatusChange
-                  0x000d80                  _ETMCanCheckForTimeOut
-                  0x000d72                  _ETMCanDoCan
-                  0x00108e                  _ETMCanDoSlaveLog
-                  0x001010                  _ETMCanDoSlaveSync
-                  0x000ed4                  _ETMCanExecuteCMD
-                  0x001a12                  _ETMCanExecuteCMDBoardSpecific
-                  0x000f1a                  _ETMCanExecuteCMDDefault
-                  0x001232                  _ETMCanInitialize
-                  0x0011fe                  _ETMCanIonPumpSendTargetCurrentReading
-                  0x001a44                  _ETMCanLogCustomPacketC
-                  0x001a4a                  _ETMCanLogCustomPacketD
-                  0x001a50                  _ETMCanLogCustomPacketE
-                  0x001a56                  _ETMCanLogCustomPacketF
-                  0x00101e                  _ETMCanLogData
-                  0x000d9e                  _ETMCanProcessMessage
-                  0x0011dc                  _ETMCanPulseSyncSendNextPulseLevel
-                  0x00185e                  _ETMCanRXMessage
-                  0x001824                  _ETMCanRXMessageBuffer
-                  0x0018b6                  _ETMCanReadMessageFromBuffer
-                  0x001a3e                  _ETMCanResetFaults
-                  0x000f6e                  _ETMCanReturnValue
-                  0x001a26                  _ETMCanReturnValueBoardSpecific
-                  0x000fe0                  _ETMCanReturnValueCalibration
-                  0x000fe8                  _ETMCanSendStatus
-                  0x000e14                  _ETMCanSetValue
-                  0x0019fe                  _ETMCanSetValueBoardSpecific
-                  0x000fd8                  _ETMCanSetValueCalibration
-                  0x001914                  _ETMCanTXMessage
-                  0x0018e8                  _ETMCanTXMessageBuffer
-                  0x000e9a                  _ETMCanUpdateFaultAndInhibitBits
-                  0x000606                  _FilterTrigger
-                  0x000bdc                  _GetInterpolationValue
-                  0x001684                  _InitINT3
-                  0x00169a                  _InitINT4
-                  0x0013d8                  _InitPins
-                  0x0016b0                  _InitTimer2
-                  0x001646                  _InitUART
-                  0x0013c0                  _Initialize
-                  0x00147c                  _LEDCheck
-                  0x0006f6                  _ProgramShiftRegisters
-                  0x000672                  _ReadAndSetEnergy
-                  0x0016d8                  _ReadDosePersonality
-                  0x000572                  _ReadTrigPulseWidth
-                  0x000c9c                  _SetStatusAndLEDs
-                  0x001306                  __C2Interrupt
+                  0x001d80                  _ETMCanAddMessageToBuffer
+                  0x001e22                  _ETMCanBufferInitialize
+                  0x001d14                  _ETMCanBufferNotEmpty
+                  0x001d08                  _ETMCanBufferRowsAvailable
+                  0x000fd6                  _ETMCanCheckForStatusChange
+                  0x000eda                  _ETMCanCheckForTimeOut
+                  0x000ecc                  _ETMCanDoCan
+                  0x0011e6                  _ETMCanDoSlaveLog
+                  0x001168                  _ETMCanDoSlaveSync
+                  0x00102c                  _ETMCanExecuteCMD
+                  0x0016d0                  _ETMCanExecuteCMDBoardSpecific
+                  0x001072                  _ETMCanExecuteCMDDefault
+                  0x00138a                  _ETMCanInitialize
+                  0x001356                  _ETMCanIonPumpSendTargetCurrentReading
+                  0x00174a                  _ETMCanLogCustomPacketC
+                  0x001782                  _ETMCanLogCustomPacketD
+                  0x0017dc                  _ETMCanLogCustomPacketE
+                  0x001836                  _ETMCanLogCustomPacketF
+                  0x001176                  _ETMCanLogData
+                  0x000ef8                  _ETMCanProcessMessage
+                  0x001334                  _ETMCanPulseSyncSendNextPulseLevel
+                  0x001d58                  _ETMCanRXMessage
+                  0x001d1e                  _ETMCanRXMessageBuffer
+                  0x001db0                  _ETMCanReadMessageFromBuffer
+                  0x00173e                  _ETMCanResetFaults
+                  0x0010c6                  _ETMCanReturnValue
+                  0x001712                  _ETMCanReturnValueBoardSpecific
+                  0x001138                  _ETMCanReturnValueCalibration
+                  0x001140                  _ETMCanSendStatus
+                  0x000f6c                  _ETMCanSetValue
+                  0x00151a                  _ETMCanSetValueBoardSpecific
+                  0x001130                  _ETMCanSetValueCalibration
+                  0x001e0e                  _ETMCanTXMessage
+                  0x001de2                  _ETMCanTXMessageBuffer
+                  0x000ff2                  _ETMCanUpdateFaultAndInhibitBits
+                  0x000670                  _FilterTrigger
+                  0x000c46                  _GetInterpolationValue
+                  0x001b56                  _InitINT3
+                  0x001b6c                  _InitINT4
+                  0x0018aa                  _InitPins
+                  0x001b82                  _InitTimer4
+                  0x001baa                  _InitTimer5
+                  0x001b18                  _InitUART
+                  0x001890                  _Initialize
+                  0x00194e                  _LEDCheck
+                  0x000760                  _ProgramShiftRegisters
+                  0x0006dc                  _ReadAndSetEnergy
+                  0x001bd2                  _ReadDosePersonality
+                  0x0005dc                  _ReadTrigPulseWidth
+                  0x000d06                  _SetStatusAndLEDs
+                  0x00145e                  __C2Interrupt
                   0x00019a                  __DefaultInterrupt
                   0xf80006                  __FBS.sec
                   0xf8000a                  __FGS.sec
                   0xf80008                  __FSS.sec
-                  0x0004d8                  __INT3Interrupt
-                  0x000d0e                  __T2Interrupt
+                  0x000500                  __INT3Interrupt
+                  0x000e28                  __T4Interrupt
+                  0x000eb8                  __T5Interrupt
                   0x0001a0                  ___addsf3
-                  0x001a5c                  ___delay32
+                  0x001ef8                  ___delay32
                   0x00025a                  ___divsf3
                   0x0002de                  ___fixunssfsi
                   0x000426                  ___floatundisf
@@ -351,7 +353,7 @@ External Symbols in Program Memory (by name):
                   0x00012c                  __psv_init
                   0x000100                  __resetPRI
                   0x000484                  _dos_intensities
-                  0x001a86                  _main
+                  0x001f22                  _main
 
 Memory Configuration
 
@@ -384,8 +386,8 @@ LOAD build/default/production/Initialize.o
 LOAD build/default/production/main.o
 LOAD build/default/production/A36487.o
 LOAD build/default/production/ETM_CAN.o
-LOAD build/default/production/ETM_CAN_USER_CONFIG.o
 LOAD build/default/production/ETM_CAN_UTILITY.o
+LOAD build/default/production/ETM_CAN_USER_CONFIG.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib/dsPIC30F\libp30F6014A-elf.a
                     0x8005c0                  __FUID0 = 0x8005c0
@@ -519,16 +521,16 @@ userdata
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x6c77
+.debug_info       0x000000       0x746b
  *(.debug_info)
- .debug_info      0x000000        0x2e8 build/default/production/A36043.o
- .debug_info      0x0002e8        0x2b2 build/default/production/ETM_BUFFER_BYTE_64.o
- .debug_info      0x00059a       0x23e4 build/default/production/Initialize.o
- .debug_info      0x00297e        0x1b1 build/default/production/main.o
- .debug_info      0x002b2f       0x164a build/default/production/A36487.o
- .debug_info      0x004179       0x24bb build/default/production/ETM_CAN.o
- .debug_info      0x006634        0x59e build/default/production/ETM_CAN_USER_CONFIG.o
- .debug_info      0x006bd2         0xa5 build/default/production/ETM_CAN_UTILITY.o
+ .debug_info      0x000000        0x2f7 build/default/production/A36043.o
+ .debug_info      0x0002f7        0x2c1 build/default/production/ETM_BUFFER_BYTE_64.o
+ .debug_info      0x0005b8       0x223e build/default/production/Initialize.o
+ .debug_info      0x0027f6        0x1c0 build/default/production/main.o
+ .debug_info      0x0029b6       0x1874 build/default/production/A36487.o
+ .debug_info      0x00422a       0x252f build/default/production/ETM_CAN.o
+ .debug_info      0x006759         0xb4 build/default/production/ETM_CAN_UTILITY.o
+ .debug_info      0x00680d        0xc5e build/default/production/ETM_CAN_USER_CONFIG.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x74b
@@ -539,37 +541,37 @@ userdata
  .debug_abbrev    0x0002bb         0x47 build/default/production/main.o
  .debug_abbrev    0x000302        0x1ae build/default/production/A36487.o
  .debug_abbrev    0x0004b0        0x1db build/default/production/ETM_CAN.o
- .debug_abbrev    0x00068b         0xac build/default/production/ETM_CAN_USER_CONFIG.o
- .debug_abbrev    0x000737         0x14 build/default/production/ETM_CAN_UTILITY.o
+ .debug_abbrev    0x00068b         0x14 build/default/production/ETM_CAN_UTILITY.o
+ .debug_abbrev    0x00069f         0xac build/default/production/ETM_CAN_USER_CONFIG.o
 
-.debug_line       0x000000       0x23bf
+.debug_line       0x000000       0x27f0
  *(.debug_line)
  .debug_line      0x000000        0x206 build/default/production/A36043.o
  .debug_line      0x000206        0x176 build/default/production/ETM_BUFFER_BYTE_64.o
- .debug_line      0x00037c        0xa0e build/default/production/Initialize.o
- .debug_line      0x000d8a         0xa4 build/default/production/main.o
- .debug_line      0x000e2e        0x93b build/default/production/A36487.o
- .debug_line      0x001769        0xa25 build/default/production/ETM_CAN.o
- .debug_line      0x00218e        0x152 build/default/production/ETM_CAN_USER_CONFIG.o
- .debug_line      0x0022e0         0xdf build/default/production/ETM_CAN_UTILITY.o
+ .debug_line      0x00037c        0xa73 build/default/production/Initialize.o
+ .debug_line      0x000def         0xa4 build/default/production/main.o
+ .debug_line      0x000e93        0xa7f build/default/production/A36487.o
+ .debug_line      0x001912        0xa25 build/default/production/ETM_CAN.o
+ .debug_line      0x002337         0xdf build/default/production/ETM_CAN_UTILITY.o
+ .debug_line      0x002416        0x3da build/default/production/ETM_CAN_USER_CONFIG.o
 
-.debug_frame      0x000000        0x3ac
+.debug_frame      0x000000        0x3cc
  *(.debug_frame)
  .debug_frame     0x000000         0x24 build/default/production/A36043.o
  .debug_frame     0x000024         0x64 build/default/production/ETM_BUFFER_BYTE_64.o
- .debug_frame     0x000088         0x84 build/default/production/Initialize.o
- .debug_frame     0x00010c         0x24 build/default/production/main.o
- .debug_frame     0x000130         0xa4 build/default/production/A36487.o
- .debug_frame     0x0001d4        0x144 build/default/production/ETM_CAN.o
- .debug_frame     0x000318         0x94 build/default/production/ETM_CAN_USER_CONFIG.o
+ .debug_frame     0x000088         0x94 build/default/production/Initialize.o
+ .debug_frame     0x00011c         0x24 build/default/production/main.o
+ .debug_frame     0x000140         0xb4 build/default/production/A36487.o
+ .debug_frame     0x0001f4        0x144 build/default/production/ETM_CAN.o
+ .debug_frame     0x000338         0x94 build/default/production/ETM_CAN_USER_CONFIG.o
 
-.debug_str        0x000000        0x433
+.debug_str        0x000000        0x47a
  *(.debug_str)
  .debug_str       0x000000         0x13 build/default/production/A36043.o
- .debug_str       0x000013        0x127 build/default/production/Initialize.o
- .debug_str       0x00013a         0xa9 build/default/production/A36487.o
- .debug_str       0x0001e3        0x226 build/default/production/ETM_CAN.o
- .debug_str       0x000409         0x2a build/default/production/ETM_CAN_USER_CONFIG.o
+ .debug_str       0x000013        0x11f build/default/production/Initialize.o
+ .debug_str       0x000132         0xc1 build/default/production/A36487.o
+ .debug_str       0x0001f3        0x226 build/default/production/ETM_CAN.o
+ .debug_str       0x000419         0x61 build/default/production/ETM_CAN_USER_CONFIG.o
 
 .debug_loc
  *(.debug_loc)
@@ -578,22 +580,22 @@ userdata
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x733
+                  0x000000        0x749
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x2a build/default/production/A36043.o
  .debug_pubnames
                   0x00002a         0x99 build/default/production/ETM_BUFFER_BYTE_64.o
  .debug_pubnames
-                  0x0000c3         0x71 build/default/production/Initialize.o
+                  0x0000c3         0x80 build/default/production/Initialize.o
  .debug_pubnames
-                  0x000134         0x61 build/default/production/main.o
+                  0x000143         0x61 build/default/production/main.o
  .debug_pubnames
-                  0x000195        0x177 build/default/production/A36487.o
+                  0x0001a4        0x17e build/default/production/A36487.o
  .debug_pubnames
-                  0x00030c        0x32e build/default/production/ETM_CAN.o
+                  0x000322        0x32e build/default/production/ETM_CAN.o
  .debug_pubnames
-                  0x00063a         0xf9 build/default/production/ETM_CAN_USER_CONFIG.o
+                  0x000650         0xf9 build/default/production/ETM_CAN_USER_CONFIG.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -613,9 +615,9 @@ userdata
  .debug_aranges
                   0x000078         0x18 build/default/production/ETM_CAN.o
  .debug_aranges
-                  0x000090         0x18 build/default/production/ETM_CAN_USER_CONFIG.o
+                  0x000090         0x18 build/default/production/ETM_CAN_UTILITY.o
  .debug_aranges
-                  0x0000a8         0x18 build/default/production/ETM_CAN_UTILITY.o
+                  0x0000a8         0x18 build/default/production/ETM_CAN_USER_CONFIG.o
 
 .ivt              0x000004         0x7c
                   0x000004          0x4 LONG 0x19a DEFINED (__ReservedTrap0)?ABSOLUTE (__ReservedTrap0):ABSOLUTE (__DefaultInterrupt)
@@ -632,7 +634,7 @@ userdata
                   0x00001a          0x4 LONG 0x19a DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001c          0x4 LONG 0x19a DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x19a DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000020          0x4 LONG 0xd0e DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000020          0x4 LONG 0x19a DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000022          0x4 LONG 0x19a DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000024          0x4 LONG 0x19a DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x19a DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -647,8 +649,8 @@ userdata
                   0x000038          0x4 LONG 0x19a DEFINED (__IC8Interrupt)?ABSOLUTE (__IC8Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00003a          0x4 LONG 0x19a DEFINED (__OC3Interrupt)?ABSOLUTE (__OC3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00003c          0x4 LONG 0x19a DEFINED (__OC4Interrupt)?ABSOLUTE (__OC4Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00003e          0x4 LONG 0x19a DEFINED (__T4Interrupt)?ABSOLUTE (__T4Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000040          0x4 LONG 0x19a DEFINED (__T5Interrupt)?ABSOLUTE (__T5Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00003e          0x4 LONG 0xe28 DEFINED (__T4Interrupt)?ABSOLUTE (__T4Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000040          0x4 LONG 0xeb8 DEFINED (__T5Interrupt)?ABSOLUTE (__T5Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000042          0x4 LONG 0x19a DEFINED (__INT2Interrupt)?ABSOLUTE (__INT2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000044          0x4 LONG 0x19a DEFINED (__U2RXInterrupt)?ABSOLUTE (__U2RXInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000046          0x4 LONG 0x19a DEFINED (__U2TXInterrupt)?ABSOLUTE (__U2TXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -662,9 +664,9 @@ userdata
                   0x000056          0x4 LONG 0x19a DEFINED (__OC6Interrupt)?ABSOLUTE (__OC6Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000058          0x4 LONG 0x19a DEFINED (__OC7Interrupt)?ABSOLUTE (__OC7Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00005a          0x4 LONG 0x19a DEFINED (__OC8Interrupt)?ABSOLUTE (__OC8Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00005c          0x4 LONG 0x4d8 DEFINED (__INT3Interrupt)?ABSOLUTE (__INT3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00005c          0x4 LONG 0x500 DEFINED (__INT3Interrupt)?ABSOLUTE (__INT3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00005e          0x4 LONG 0x19a DEFINED (__INT4Interrupt)?ABSOLUTE (__INT4Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000060          0x4 LONG 0x1306 DEFINED (__C2Interrupt)?ABSOLUTE (__C2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000060          0x4 LONG 0x145e DEFINED (__C2Interrupt)?ABSOLUTE (__C2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000062          0x4 LONG 0x19a DEFINED (__PWMInterrupt)?ABSOLUTE (__PWMInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000064          0x4 LONG 0x19a DEFINED (__QEIInterrupt)?ABSOLUTE (__QEIInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000066          0x4 LONG 0x19a DEFINED (__DCIInterrupt)?ABSOLUTE (__DCIInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -696,7 +698,7 @@ userdata
                   0x00009a          0x4 LONG 0x19a DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00009c          0x4 LONG 0x19a DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00009e          0x4 LONG 0x19a DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000a0          0x4 LONG 0xd0e DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0000a0          0x4 LONG 0x19a DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000a2          0x4 LONG 0x19a DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000a4          0x4 LONG 0x19a DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000a6          0x4 LONG 0x19a DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -711,8 +713,8 @@ userdata
                   0x0000b8          0x4 LONG 0x19a DEFINED (__AltIC8Interrupt)?ABSOLUTE (__AltIC8Interrupt):DEFINED (__IC8Interrupt)?ABSOLUTE (__IC8Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000ba          0x4 LONG 0x19a DEFINED (__AltOC3Interrupt)?ABSOLUTE (__AltOC3Interrupt):DEFINED (__OC3Interrupt)?ABSOLUTE (__OC3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000bc          0x4 LONG 0x19a DEFINED (__AltOC4Interrupt)?ABSOLUTE (__AltOC4Interrupt):DEFINED (__OC4Interrupt)?ABSOLUTE (__OC4Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000be          0x4 LONG 0x19a DEFINED (__AltT4Interrupt)?ABSOLUTE (__AltT4Interrupt):DEFINED (__T4Interrupt)?ABSOLUTE (__T4Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000c0          0x4 LONG 0x19a DEFINED (__AltT5Interrupt)?ABSOLUTE (__AltT5Interrupt):DEFINED (__T5Interrupt)?ABSOLUTE (__T5Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0000be          0x4 LONG 0xe28 DEFINED (__AltT4Interrupt)?ABSOLUTE (__AltT4Interrupt):DEFINED (__T4Interrupt)?ABSOLUTE (__T4Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0000c0          0x4 LONG 0xeb8 DEFINED (__AltT5Interrupt)?ABSOLUTE (__AltT5Interrupt):DEFINED (__T5Interrupt)?ABSOLUTE (__T5Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000c2          0x4 LONG 0x19a DEFINED (__AltINT2Interrupt)?ABSOLUTE (__AltINT2Interrupt):DEFINED (__INT2Interrupt)?ABSOLUTE (__INT2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000c4          0x4 LONG 0x19a DEFINED (__AltU2RXInterrupt)?ABSOLUTE (__AltU2RXInterrupt):DEFINED (__U2RXInterrupt)?ABSOLUTE (__U2RXInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000c6          0x4 LONG 0x19a DEFINED (__AltU2TXInterrupt)?ABSOLUTE (__AltU2TXInterrupt):DEFINED (__U2TXInterrupt)?ABSOLUTE (__U2TXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -726,9 +728,9 @@ userdata
                   0x0000d6          0x4 LONG 0x19a DEFINED (__AltOC6Interrupt)?ABSOLUTE (__AltOC6Interrupt):DEFINED (__OC6Interrupt)?ABSOLUTE (__OC6Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000d8          0x4 LONG 0x19a DEFINED (__AltOC7Interrupt)?ABSOLUTE (__AltOC7Interrupt):DEFINED (__OC7Interrupt)?ABSOLUTE (__OC7Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000da          0x4 LONG 0x19a DEFINED (__AltOC8Interrupt)?ABSOLUTE (__AltOC8Interrupt):DEFINED (__OC8Interrupt)?ABSOLUTE (__OC8Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000dc          0x4 LONG 0x4d8 DEFINED (__AltINT3Interrupt)?ABSOLUTE (__AltINT3Interrupt):DEFINED (__INT3Interrupt)?ABSOLUTE (__INT3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0000dc          0x4 LONG 0x500 DEFINED (__AltINT3Interrupt)?ABSOLUTE (__AltINT3Interrupt):DEFINED (__INT3Interrupt)?ABSOLUTE (__INT3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000de          0x4 LONG 0x19a DEFINED (__AltINT4Interrupt)?ABSOLUTE (__AltINT4Interrupt):DEFINED (__INT4Interrupt)?ABSOLUTE (__INT4Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000e0          0x4 LONG 0x1306 DEFINED (__AltC2Interrupt)?ABSOLUTE (__AltC2Interrupt):DEFINED (__C2Interrupt)?ABSOLUTE (__C2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x0000e0          0x4 LONG 0x145e DEFINED (__AltC2Interrupt)?ABSOLUTE (__AltC2Interrupt):DEFINED (__C2Interrupt)?ABSOLUTE (__C2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000e2          0x4 LONG 0x19a DEFINED (__AltPWMInterrupt)?ABSOLUTE (__AltPWMInterrupt):DEFINED (__PWMInterrupt)?ABSOLUTE (__PWMInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000e4          0x4 LONG 0x19a DEFINED (__AltQEIInterrupt)?ABSOLUTE (__AltQEIInterrupt):DEFINED (__QEIInterrupt)?ABSOLUTE (__QEIInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x0000e6          0x4 LONG 0x19a DEFINED (__AltDCIInterrupt)?ABSOLUTE (__AltDCIInterrupt):DEFINED (__DCIInterrupt)?ABSOLUTE (__DCIInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -1765,66 +1767,66 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x0000c0        0x7da
+                  0x0000c0        0x822
  .debug_pubtypes
                   0x0000c0         0x4e build/default/production/A36043.o
  .debug_pubtypes
                   0x00010e         0x23 build/default/production/ETM_BUFFER_BYTE_64.o
  .debug_pubtypes
-                  0x000131        0x330 build/default/production/Initialize.o
+                  0x000131        0x315 build/default/production/Initialize.o
  .debug_pubtypes
-                  0x000461         0x12 build/default/production/main.o
+                  0x000446         0x12 build/default/production/main.o
  .debug_pubtypes
-                  0x000473        0x198 build/default/production/A36487.o
+                  0x000458        0x1b1 build/default/production/A36487.o
  .debug_pubtypes
-                  0x00060b        0x257 build/default/production/ETM_CAN.o
+                  0x000609        0x257 build/default/production/ETM_CAN.o
  .debug_pubtypes
-                  0x000862         0x38 build/default/production/ETM_CAN_USER_CONFIG.o
+                  0x000860         0x82 build/default/production/ETM_CAN_USER_CONFIG.o
 
 __c30_signature
-                  0x00089a         0x78
+                  0x0008e2         0x78
  __c30_signature
-                  0x00089a          0x6 build/default/production/A36043.o
+                  0x0008e2          0x6 build/default/production/A36043.o
  __c30_signature
-                  0x0008a0          0x6 build/default/production/ETM_BUFFER_BYTE_64.o
+                  0x0008e8          0x6 build/default/production/ETM_BUFFER_BYTE_64.o
  __c30_signature
-                  0x0008a6          0x6 build/default/production/Initialize.o
+                  0x0008ee          0x6 build/default/production/Initialize.o
  __c30_signature
-                  0x0008ac          0x6 build/default/production/main.o
+                  0x0008f4          0x6 build/default/production/main.o
  __c30_signature
-                  0x0008b2          0x6 build/default/production/A36487.o
+                  0x0008fa          0x6 build/default/production/A36487.o
  __c30_signature
-                  0x0008b8          0x6 build/default/production/ETM_CAN.o
+                  0x000900          0x6 build/default/production/ETM_CAN.o
  __c30_signature
-                  0x0008be          0x6 build/default/production/ETM_CAN_USER_CONFIG.o
+                  0x000906          0x6 build/default/production/ETM_CAN_USER_CONFIG.o
  __c30_signature
-                  0x0008c4          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+                  0x00090c          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x0008ca          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                  0x000912          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x0008d0          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libpic30-elf.a(delay32.eo)
+                  0x000918          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libpic30-elf.a(delay32.eo)
  __c30_signature
-                  0x0008d6          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(addsf3.eo)
+                  0x00091e          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(addsf3.eo)
  __c30_signature
-                  0x0008dc          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(divsf3.eo)
+                  0x000924          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(divsf3.eo)
  __c30_signature
-                  0x0008e2          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(fixunssfsi.eo)
+                  0x00092a          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(fixunssfsi.eo)
  __c30_signature
-                  0x0008e8          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(floatunsisf.eo)
+                  0x000930          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(floatunsisf.eo)
  __c30_signature
-                  0x0008ee          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(fpack.eo)
+                  0x000936          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(fpack.eo)
  __c30_signature
-                  0x0008f4          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(funpack.eo)
+                  0x00093c          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(funpack.eo)
  __c30_signature
-                  0x0008fa          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(funpack2.eo)
+                  0x000942          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(funpack2.eo)
  __c30_signature
-                  0x000900          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(futil.eo)
+                  0x000948          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(futil.eo)
  __c30_signature
-                  0x000906          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
+                  0x00094e          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
  __c30_signature
-                  0x00090c          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
+                  0x000954          0x6 c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
 
-.nbss               0x0800        0x282
+.nbss               0x0800        0x290
  .nbss              0x0800        0x1c4 build/default/production/ETM_CAN.o
                     0x0800                  _etm_can_rx_message_buffer
                     0x08a8                  _etm_can_tx_message_buffer
@@ -1836,94 +1838,95 @@ __c30_signature
                     0x0992                  _etm_can_my_configuration
                     0x09a2                  _etm_can_can_status
                     0x09c2                  _etm_can_default_transmit_counter
- .nbss              0x09c4         0xbe build/default/production/A36487.o
+ .nbss              0x09c4         0xcc build/default/production/A36487.o
                     0x09c4                  _command_string
                     0x09ca                  _uart2_input_buffer
                     0x0a0c                  _uart2_output_buffer
                     0x0a4e                  _psb_params
-                    0x0a64                  _psb_faults
-                    0x0a6c                  _psb_data
-                    0x0a80                  _change_pulse_width_counter
-                    0x0a81                  _state
+                    0x0a66                  _psb_faults
+                    0x0a6e                  _psb_data
+                    0x0a8e                  _change_pulse_width_counter
 
 .const              0x8484          0x8 load address 0x000484  
  .const             0x8484          0x8 build/default/production/A36487.o
                     0x8484                  _dos_intensities
 
-.text             0x00048c       0x15d0
- .text            0x00048c        0x8e6 build/default/production/A36487.o
+.text             0x00048c       0x1a6c
+ .text            0x00048c        0xa40 build/default/production/A36487.o
                   0x00048c                  _DoPulseSync
-                  0x0004d8                  __INT3Interrupt
-                  0x000572                  _ReadTrigPulseWidth
-                  0x000606                  _FilterTrigger
-                  0x000672                  _ReadAndSetEnergy
-                  0x0006f6                  _ProgramShiftRegisters
-                  0x000bdc                  _GetInterpolationValue
-                  0x000c9c                  _SetStatusAndLEDs
-                  0x000d0e                  __T2Interrupt
- .text            0x000d72        0x64e build/default/production/ETM_CAN.o
-                  0x000d72                  _ETMCanDoCan
-                  0x000d80                  _ETMCanCheckForTimeOut
-                  0x000d9e                  _ETMCanProcessMessage
-                  0x000e14                  _ETMCanSetValue
-                  0x000e7e                  _ETMCanCheckForStatusChange
-                  0x000e9a                  _ETMCanUpdateFaultAndInhibitBits
-                  0x000ed4                  _ETMCanExecuteCMD
-                  0x000f1a                  _ETMCanExecuteCMDDefault
-                  0x000f6e                  _ETMCanReturnValue
-                  0x000fd8                  _ETMCanSetValueCalibration
-                  0x000fe0                  _ETMCanReturnValueCalibration
-                  0x000fe8                  _ETMCanSendStatus
-                  0x001010                  _ETMCanDoSlaveSync
-                  0x00101e                  _ETMCanLogData
-                  0x00108e                  _ETMCanDoSlaveLog
-                  0x0011dc                  _ETMCanPulseSyncSendNextPulseLevel
-                  0x0011fe                  _ETMCanIonPumpSendTargetCurrentReading
-                  0x001232                  _ETMCanInitialize
-                  0x001306                  __C2Interrupt
- .text            0x0013c0        0x318 build/default/production/Initialize.o
-                  0x0013c0                  _Initialize
-                  0x0013d8                  _InitPins
-                  0x00147c                  _LEDCheck
-                  0x001646                  _InitUART
-                  0x001684                  _InitINT3
-                  0x00169a                  _InitINT4
-                  0x0016b0                  _InitTimer2
- .text            0x0016d8        0x136 build/default/production/A36043.o
-                  0x0016d8                  _ReadDosePersonality
- .text            0x00180e        0x124 build/default/production/ETM_CAN_UTILITY.o
-                  0x00180e                  _ETMCanBufferRowsAvailable
-                  0x00181a                  _ETMCanBufferNotEmpty
-                  0x001824                  _ETMCanRXMessageBuffer
-                  0x00185e                  _ETMCanRXMessage
-                  0x001886                  _ETMCanAddMessageToBuffer
-                  0x0018b6                  _ETMCanReadMessageFromBuffer
-                  0x0018e8                  _ETMCanTXMessageBuffer
-                  0x001914                  _ETMCanTXMessage
-                  0x001928                  _ETMCanBufferInitialize
- .text            0x001932         0xcc build/default/production/ETM_BUFFER_BYTE_64.o
-                  0x001932                  _BufferByte64Initialize
-                  0x001946                  _BufferByte64WriteByte
-                  0x001990                  _BufferByte64ReadByte
-                  0x0019cc                  _BufferByte64BytesInBuffer
-                  0x0019e2                  _BufferByte64IsNotEmpty
- .text            0x0019fe         0x5e build/default/production/ETM_CAN_USER_CONFIG.o
-                  0x0019fe                  _ETMCanSetValueBoardSpecific
-                  0x001a12                  _ETMCanExecuteCMDBoardSpecific
-                  0x001a26                  _ETMCanReturnValueBoardSpecific
-                  0x001a3e                  _ETMCanResetFaults
-                  0x001a44                  _ETMCanLogCustomPacketC
-                  0x001a4a                  _ETMCanLogCustomPacketD
-                  0x001a50                  _ETMCanLogCustomPacketE
-                  0x001a56                  _ETMCanLogCustomPacketF
+                  0x000500                  __INT3Interrupt
+                  0x0005dc                  _ReadTrigPulseWidth
+                  0x000670                  _FilterTrigger
+                  0x0006dc                  _ReadAndSetEnergy
+                  0x000760                  _ProgramShiftRegisters
+                  0x000c46                  _GetInterpolationValue
+                  0x000d06                  _SetStatusAndLEDs
+                  0x000e28                  __T4Interrupt
+                  0x000eb8                  __T5Interrupt
+ .text            0x000ecc        0x64e build/default/production/ETM_CAN.o
+                  0x000ecc                  _ETMCanDoCan
+                  0x000eda                  _ETMCanCheckForTimeOut
+                  0x000ef8                  _ETMCanProcessMessage
+                  0x000f6c                  _ETMCanSetValue
+                  0x000fd6                  _ETMCanCheckForStatusChange
+                  0x000ff2                  _ETMCanUpdateFaultAndInhibitBits
+                  0x00102c                  _ETMCanExecuteCMD
+                  0x001072                  _ETMCanExecuteCMDDefault
+                  0x0010c6                  _ETMCanReturnValue
+                  0x001130                  _ETMCanSetValueCalibration
+                  0x001138                  _ETMCanReturnValueCalibration
+                  0x001140                  _ETMCanSendStatus
+                  0x001168                  _ETMCanDoSlaveSync
+                  0x001176                  _ETMCanLogData
+                  0x0011e6                  _ETMCanDoSlaveLog
+                  0x001334                  _ETMCanPulseSyncSendNextPulseLevel
+                  0x001356                  _ETMCanIonPumpSendTargetCurrentReading
+                  0x00138a                  _ETMCanInitialize
+                  0x00145e                  __C2Interrupt
+ .text            0x00151a        0x376 build/default/production/ETM_CAN_USER_CONFIG.o
+                  0x00151a                  _ETMCanSetValueBoardSpecific
+                  0x0016d0                  _ETMCanExecuteCMDBoardSpecific
+                  0x001712                  _ETMCanReturnValueBoardSpecific
+                  0x00173e                  _ETMCanResetFaults
+                  0x00174a                  _ETMCanLogCustomPacketC
+                  0x001782                  _ETMCanLogCustomPacketD
+                  0x0017dc                  _ETMCanLogCustomPacketE
+                  0x001836                  _ETMCanLogCustomPacketF
+ .text            0x001890        0x342 build/default/production/Initialize.o
+                  0x001890                  _Initialize
+                  0x0018aa                  _InitPins
+                  0x00194e                  _LEDCheck
+                  0x001b18                  _InitUART
+                  0x001b56                  _InitINT3
+                  0x001b6c                  _InitINT4
+                  0x001b82                  _InitTimer4
+                  0x001baa                  _InitTimer5
+ .text            0x001bd2        0x136 build/default/production/A36043.o
+                  0x001bd2                  _ReadDosePersonality
+ .text            0x001d08        0x124 build/default/production/ETM_CAN_UTILITY.o
+                  0x001d08                  _ETMCanBufferRowsAvailable
+                  0x001d14                  _ETMCanBufferNotEmpty
+                  0x001d1e                  _ETMCanRXMessageBuffer
+                  0x001d58                  _ETMCanRXMessage
+                  0x001d80                  _ETMCanAddMessageToBuffer
+                  0x001db0                  _ETMCanReadMessageFromBuffer
+                  0x001de2                  _ETMCanTXMessageBuffer
+                  0x001e0e                  _ETMCanTXMessage
+                  0x001e22                  _ETMCanBufferInitialize
+ .text            0x001e2c         0xcc build/default/production/ETM_BUFFER_BYTE_64.o
+                  0x001e2c                  _BufferByte64Initialize
+                  0x001e40                  _BufferByte64WriteByte
+                  0x001e8a                  _BufferByte64ReadByte
+                  0x001ec6                  _BufferByte64BytesInBuffer
+                  0x001edc                  _BufferByte64IsNotEmpty
 
-.init.delay32     0x001a5c         0x1c
- .init.delay32    0x001a5c         0x1c c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libpic30-elf.a(delay32.eo)
-                  0x001a5c                  ___delay32
+.init.delay32     0x001ef8         0x1c
+ .init.delay32    0x001ef8         0x1c c:/program files (x86)/microchip/xc16/v1.22/bin/bin/../../lib\libpic30-elf.a(delay32.eo)
+                  0x001ef8                  ___delay32
 
-.dinit            0x001a78          0xe
- .dinit           0x001a78          0xe data_init
+.dinit            0x001f14          0xe
+ .dinit           0x001f14          0xe data_init
 
-.text             0x001a86          0x6
- .text            0x001a86          0x6 build/default/production/main.o
-                  0x001a86                  _main
+.text             0x001f22          0x6
+ .text            0x001f22          0x6 build/default/production/main.o
+                  0x001f22                  _main

@@ -23,37 +23,54 @@ void SetStatusAndLEDs(void);
 
 
 void DoPulseSync(void) {
-    psb_data.local_state = STATE_INIT;
+    psb_data.state_machine = STATE_INIT;
     MACRO_ClrWdt()
 
     while (1) {
-        switch (psb_data.local_state) {
-
+        switch (psb_data.state_machine) {
             case STATE_INIT:
                 MACRO_ClrWdt()
                 Initialize();
+                ETMCanInitialize();
                 MACRO_ClrWdt()
                 psb_data.personality = ReadDosePersonality();
                 MACRO_ClrWdt()
-                psb_data.local_state = STATE_RUN;
+                psb_data.local_state = STATE_WAIT_FOR_CONFIG;
+                break;
+
+            case STATE_WAIT_FOR_CONFIG:
+                MACRO_ClrWdt()
+                SetStatusAndLEDs();
+                ETMCanDoCan();
                 break;
 
             case STATE_RUN:
                 MACRO_ClrWdt()
                 SetStatusAndLEDs();
+                ETMCanDoCan();
                 break;
 
             case STATE_FAULT:
                 MACRO_ClrWdt()
+                psb_data.enable_pulses = 0;
                 SetStatusAndLEDs();
+                ETMCanDoCan();
                 break;
-
         }
     }
 }
 
 void __attribute__((interrupt(__save__(CORCON,SR)), no_auto_psv)) _INT3Interrupt(void)
 {
+    if (psb_data.prf_ok_to_pulse) {
+        TMR5 = 0;                   //Clear 2.4ms interrupt flag
+        _T5IF = 0;
+        psb_data.prf_ok_to_pulse = 0;
+    }
+    else {
+        psb_faults.prf_fault = 1;
+    }
+
     if (PIN_TRIG_INPUT != ILL_TRIG_ON)
     {
         psb_data.pulse_counter++;
@@ -73,12 +90,16 @@ void __attribute__((interrupt(__save__(CORCON,SR)), no_auto_psv)) _INT3Interrupt
     {
         psb_faults.trigger_fault = 1;
         psb_data.trigger_filtered = 0;
-        psb_data.trigger_input = 0;
 
         psb_data.pulses_on = 0;
         psb_data.pulses_off = 0;
     }
+
     ProgramShiftRegisters();
+
+    ETMCanPulseSyncSendNextPulseLevel(psb_data.energy, psb_data.pulses_on + 1);
+    if (etm_can_status_register.status_word_0 & ETM_CAN_STATUS_WORD_0_HIGH_SPEED_LOGGING_ENABLED)
+        ETMCanLogCustomPacketC();
 
     _INT3IF = 0;		// Clear Interrupt flag
 }
@@ -144,7 +165,7 @@ unsigned char FilterTrigger(unsigned char param)
     else
         param = 0;
 
-    //Ensure that at least 15 of the same width pulses in a row actually change the sampled width
+    //Ensure that at least 15 of the same width pulses in a row only change the sampled width
     if (param != psb_data.last_trigger_filtered)
     {
         change_pulse_width_counter++;
@@ -154,9 +175,8 @@ unsigned char FilterTrigger(unsigned char param)
             psb_data.last_trigger_filtered = param;
     }
     else
-    {
         change_pulse_width_counter = 0;
-    }
+
     return param;
 }
 
@@ -301,7 +321,7 @@ void ProgramShiftRegisters(void)
         else if (p == 3)
             temp = psb_params.pfn_delay_high;   //PFN Delay
         else if (p == 4)
-            temp = 0;                           //Dosimeter trigger (not used)
+            temp = 0;                           //Dosimeter delay (not used)
         else if (p == 5)
             temp = psb_params.afc_delay_high;   //AFC Delay
         else
@@ -358,13 +378,11 @@ void ProgramShiftRegisters(void)
     if (PIN_TRIG_INPUT != ILL_TRIG_ON)
     {
     	PIN_PW_HOLD_LOWRESET_OUT = OLL_PW_HOLD_LOWRESET;   // clear reset only when trig pulse is low
+        MACRO_NOP()
     	psb_faults.trigger_fault = 0;
     }
     else
     	psb_faults.trigger_fault = 1;
-
-    MACRO_NOP()
-
 }
 
 // calculate the interpolation value
@@ -385,23 +403,62 @@ unsigned int GetInterpolationValue(unsigned int low_point, unsigned int high_poi
 }
 
 void SetStatusAndLEDs(void) {
-    if (psb_data.local_state & WARMING_UP) {               //Warming up
+    
+    if (psb_faults.reset_faults) {
+        psb_faults.can_comm_fault = 0;
+        psb_faults.prf_fault = 0;
+        psb_faults.reset_faults = 0;
+    }
+
+    if (psb_data.prf >= MAX_FREQUENCY) {
+        psb_faults.prf_fault = 1;
+        psb_data.enable_pulses = 0;
+        psb_faults.inhibit_pulsing = 1;
+    }
+
+    if (PIN_XRAY_CMD_MISMATCH_IN == ILL_XRAY_CMD_MISMATCH)
+        psb_faults.mismatch_fault = 1;
+    else
+        psb_faults.mismatch_fault = 0;
+
+    if ((psb_data.system_state != psb_data.local_state) && (psb_data.system_state & XRAY_ON)) {
+        psb_data.enable_pulses = 0;
+        psb_faults.inhibit_pulsing = 1;
+    }
+    else
+        psb_data.local_state = psb_data.system_state;
+
+    if (psb_data.counter_config_received > 3)
+        psb_data.state_machine = STATE_RUN;
+
+    if ((psb_faults.inhibit_pulsing) || (psb_faults.prf_fault) || (psb_faults.trigger_fault) || (psb_faults.mismatch_fault)) {
+        psb_data.local_state &= !XRAY_ON;
+        psb_data.state_machine = STATE_FAULT;
+    }
+
+    if ((psb_faults.panel_fault) || (psb_faults.keylock_fault) || (psb_faults.can_comm_fault)) {
+        psb_data.local_state = STANDBY;
+        psb_data.state_machine = STATE_FAULT;
+    }
+
+    //This LED will be used for CAN status
+    /*if (psb_data.local_state & WARMING_UP) {               //Warming up
         PIN_LED_WARMUP = OLL_LED_ON;
         PIN_CPU_WARMUP_OUT = OLL_CPU_WARMUP;
     }
     else {
         PIN_LED_WARMUP = !OLL_LED_ON;
         PIN_CPU_WARMUP_OUT = !OLL_CPU_WARMUP;
-    }
+    }*/
 
-    if (psb_data.local_state & STANDBY) {               //Warm (standby)
+    /*if (psb_data.local_state & STANDBY) {               //Warm (standby)
         PIN_LED_STANDBY = OLL_LED_ON;
         PIN_CPU_STANDBY_OUT = OLL_CPU_STANDBY;
     }
     else {
         PIN_LED_STANDBY = !OLL_LED_ON;
         PIN_CPU_STANDBY_OUT = !OLL_CPU_STANDBY;
-    }
+    }*/
 
     if (psb_data.local_state & READY) {               //Ready
         PIN_LED_READY = OLL_LED_ON;
@@ -422,6 +479,7 @@ void SetStatusAndLEDs(void) {
     if (psb_data.local_state & SUM_FAULT) {               //Fault
         PIN_LED_SUMFLT = OLL_LED_ON;
         PIN_CPU_SUMFLT_OUT = OLL_CPU_SUMFLT;
+        psb_data.state_machine = STATE_FAULT;
     }
     else {
         PIN_LED_SUMFLT = !OLL_LED_ON;
@@ -429,29 +487,49 @@ void SetStatusAndLEDs(void) {
     }
 }
 
-void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void)
+void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void)
 {
-    // This is a 100ms timer.  Used for CAN communication and PRF Calculation
+    // This is a 100ms timer.  Used for CAN communication, PRF Calculation, and the heartbeat
 
-    psb_data.counter_100ms++;
-
-    //Calculate PRF every second and check prf fault
-    if (psb_data.counter_100ms >= 10) {
+    //Calculate PRF every second
+    psb_data.prf_counter_100ms++;
+    if (psb_data.prf_counter_100ms >= 10) {
         psb_data.prf = psb_data.pulse_counter;
         psb_data.pulse_counter = 0;
-        psb_data.counter_100ms = 0;
-        if (psb_data.pulse_counter >= MAX_FREQUENCY)
-            psb_faults.prf_fault = 1;
-    }
-    else if (psb_data.pulse_counter >= MAX_FREQUENCY) {
-        psb_faults.prf_fault = 1;
-        psb_faults.inhibit_100ms = 10 - psb_data.counter_100ms;
-        psb_faults.inhibit_pulsing = 1;
+        psb_data.prf_counter_100ms = 0;
+        psb_faults.prf_fault = 0;
     }
 
+    //CAN Communication Timeout Fault
+    psb_data.can_counter_100ms++;
+    if ((psb_data.can_counter_100ms >= 2) && (psb_data.can_comm_ok)) {
+        psb_data.can_counter_100ms = 0;
+        psb_data.can_comm_ok = 0;
+        psb_faults.can_comm_fault = 0;
+    }
+    else if ((psb_data.can_counter_100ms >= 2) && (!psb_data.can_comm_ok)) {
+        psb_data.can_counter_100ms = 0;
+        psb_faults.can_comm_fault = 1;
+    }
 
+    //Heartbeat the standby LED
+    if (psb_data.heartbeat >= 5) {
+        psb_data.heartbeat = 0;
+        if (PIN_LED_STANDBY)
+            PIN_LED_STANDBY = !OLL_LED_ON;
+        else
+            PIN_LED_STANDBY = OLL_LED_ON;
+    }
 
-    TMR2 = 0;
-    _T2IF = 0;
-    
+   TMR4 = 0;
+   _T4IF = 0;
+}
+
+void __attribute__((interrupt, no_auto_psv)) _T5Interrupt(void)
+{
+    // This is a 2.4ms timer.  Used to ensure PRF is not exceeded.
+
+    psb_data.prf_ok_to_pulse = 1;
+
+    //The interrupt flag is cleared when a trigger arrives
 }

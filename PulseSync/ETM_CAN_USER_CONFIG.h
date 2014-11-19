@@ -11,8 +11,8 @@
 #define __USE_CAN_2
 //#define __A36224_500
 #define __A36487                            //Pulse Sync Board
-#define ETM_CAN_MY_ADDRESS                  ETM_CAN_ADDR_HEATER_MAGNET_BOARD
-#define PIN_CAN_OPERATION_LED               _LATC4
+#define ETM_CAN_MY_ADDRESS                  ETM_CAN_ADDR_PULSE_SYNC_BOARD
+#define PIN_CAN_OPERATION_LED               _LATG14
 
 
 /*

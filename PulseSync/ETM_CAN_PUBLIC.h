@@ -89,7 +89,7 @@ void ETMCanLogCustomPacketF(void);
 #endif
 
 
-#ifdef __A35487
+#ifdef __A36487
 // Only for Pulse Sync Board
 void ETMCanPulseSyncSendNextPulseLevel(unsigned int next_pulse_level, unsigned int next_pulse_count);
 #endif
